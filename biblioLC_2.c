@@ -80,6 +80,7 @@ Livre* recherche_Livre_titre(Livre* li, char titre){
 	return NULL;
 }
 
+
 Biblio* recherche_Livre_auteur(Biblio* b, char auteur){
 	Livre* temp = b -> L;
 	Biblio* biblio_aut=creer_biblio();
@@ -92,39 +93,35 @@ Biblio* recherche_Livre_auteur(Biblio* b, char auteur){
 	return biblio_aut;
 }
 
-void fusion(Biblio** b1, Biblio* b2){
+
+Biblio* fusion(Biblio* b1, Biblio* b2){
 
 	Livre* tmp = b2->L;
 
 	// Ajout de b2 en tête de b1 
 	// b2 est ajouté a l'en vers
 	while (tmp){
-		inserer_en_tete(*b1, tmp->num, tmp->titre, tmp->auteur);
+		inserer_en_tete(b1, tmp->num, tmp->titre, tmp->auteur);
 		tmp = tmp->suiv;
 	}
 
 	liberer_biblio(b2);
-	//return b1;
+	return b1;
 }
 
-Livre* recherche_doublons(Biblio* b){
-
-	Livre* liste = b->L;
-	Livre* res_L = NULL;
-	Livre* doublon = NULL;
-
-	while (liste){
-		doublon = recherche_Livre_auteur(b, liste->auteur)->L;
-		while (doublon){
-			res_L = (Livre*)malloc(sizeof(Livre));
-			if (strcmp(liste->titre, doublon->titre) && strcmp(liste->auteur, doublon->auteur)){
-				res_L->titre = strdup(doublon->titre);
-				res_L->auteur = strdub(doublon->auteur);
-				res_L->num = doublon->num;
-				res_L->suiv = NULL;
-				res_L = res_L->suiv;
-			}	
+void supprime_Livre(Biblio* b, int num, char* auteur, char* titre){
+	Livre* temp = b -> L;
+	Livre* temp2 = b->L->suiv;
+	while(temp){
+		if (temp2->num == num && temp2->auteur == auteur && temp2->titre == titre){
+			temp->suiv = temp2->suiv;
+			liberer_livre(temp2);
 		}
 	}
-
 }
+
+
+
+
+
+
