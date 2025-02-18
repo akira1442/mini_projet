@@ -5,8 +5,11 @@ PROGRAMS = main
 all: $(PROGRAMS)
 
 main: BiblioH.o biblioLC.o entreeSortieLC.o entreeSortieH.o main.o
-	gcc -o $@ $(CFLAGS) $^ $(LDFLAGS) 
+	gcc -o $(CFLAGS)
 
+liste: biblioLC.o entreeSortieLC.o main.o
+	gcc -o $@ $(CFLAGS) $^ $(LDFLAGS)
+	
 entreeSortieLC.o: entreeSortieLC.c
 	gcc $(CFLAGS) -c entreeSortieLC.c
 

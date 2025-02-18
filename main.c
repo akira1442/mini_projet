@@ -46,7 +46,7 @@ int main(int argc, char** argv){
                 printf("FIN PROGRAMME\n");
                 break;
             case 1:
-                //afficher_biblio(B);
+                afficher_biblio(B);
                 break;
             case 2:
                 printf("Numero, TITRE, Auteur:\n");
@@ -56,12 +56,12 @@ int main(int argc, char** argv){
             case 3:
                 printf("Numero, TITRE, Auteur:\n");
                 scanf("%d %s %s", &num, titre, auteur);
-                //supprime_Livre(B, num, auteur, titre);
+                supprime_Livre(B, num, auteur, titre);
             default:
                 
         }
 
-    } while (choix != 0)
+    } while (choix != 0);
     
     liberer_biblio(B);
     return 0;
