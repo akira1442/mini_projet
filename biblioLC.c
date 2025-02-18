@@ -14,6 +14,7 @@ Livre* creer_livre(int num,char* titre,char* auteur){
 }
 
 void liberer_livre(Livre* l){
+
 	free(l->titre);
 	free(l->auteur);
 	free(l);
@@ -26,7 +27,7 @@ Biblio* creer_biblio(){
 }
 
 void liberer_biblio(Biblio* b){
-	
+
 	Livre* tmp = b->L;
 
 	while(tmp){
@@ -50,11 +51,16 @@ void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur){
 }
 
 void affiche_livre(Livre* l){
-	printf("%d %s %s\n", l->num, l->auteur, l->titre);	
 	
+	if (l == NULL) return;
+
+	printf("%d, %s, %s\n", l->num, l->auteur, l->titre);	
 }
 
 void afficher_biblio(Biblio* b){	
+
+	if ((b == NULL) || (b->L == NULL)) {return;}
+
 	Livre* temp = b ->L;
 	while (temp){
 		affiche_livre(temp);
@@ -63,25 +69,39 @@ void afficher_biblio(Biblio* b){
 }
 
 Livre* recherche_Livre_num(Biblio* b, int num){
-	Livre* temp = li;
+
+	if ((b == NULL) || (b->L == NULL)) {return NULL;}
+
+	Livre* temp = b->L;
+	
 	while (temp){
-		if(temp->num == num){return temp;}
+		if(temp->num == num){
+			return temp;
+		}
 		temp=temp->suiv;
 	}
-	return NULL;
+	return temp;
 }
 
-Livre* recherche_Livre_titre(Biblio* b, char titre){
-	Livre* temp = li;
+Livre* recherche_Livre_titre(Biblio* b, char* titre){
+
+	if ((b == NULL) || (b->L == NULL)) {return NULL;}
+
+	Livre* temp = b->L;
 	while (temp){
-		if(strcmp(temp->titre, &titre)){return temp;}
+		if(strcmp(temp->titre, titre)){
+			return temp;
+		}
 		temp=temp->suiv;
 	}
 	return NULL;
 }
 
 Biblio* recherche_Livre_auteur(Biblio* b, char* auteur){
-	Livre* temp = b -> L;
+
+	if ((b == NULL) || (b->L == NULL)) {return NULL;}
+
+	Livre* temp = b->L;
 	Biblio* biblio_aut=creer_biblio();
 	while(temp){
 		if (strcmp(temp->auteur, auteur)){
@@ -93,18 +113,38 @@ Biblio* recherche_Livre_auteur(Biblio* b, char* auteur){
 }
 
 void supprime_Livre(Biblio* b, int num, char* auteur, char* titre){
-	Livre* temp = b -> L;
-	Livre* temp2 = b->L->suiv;
-	while(temp){
-		if (temp2->num == num && temp2->auteur == auteur && temp2->titre == titre){
-			temp->suiv = temp2->suiv;
-			liberer_livre(temp2);
+	
+	if ((b == NULL) || (b->L == NULL)){
+		return;
+	}
+	
+	Livre* prec = NULL;
+	Livre* curr = b->L;
+
+	while(curr){
+		if ((curr->num == num) &&  (strcmp(auteur, curr->auteur) == 0) && (strcmp(titre, curr->titre) == 0)){
+			// Cas ou la suppression se fait en tête
+			if (prec == NULL){
+				b->L = curr->suiv;
+				curr = b->L;
+			}
+			// Cas ou la suppression se fait au milieu ou en queue
+			else{
+				prec->suiv = curr->suiv;
+			}
+			liberer_livre(curr);
+			printf("%d, %s, %s a ete suppprime\n", num, auteur, titre);
 			break;
 		}
+		curr = curr->suiv;
+		prec = prec->suiv;
 	}
+	printf("%d, %s, %s n'est pas dans la bibliotheque\n", num, titre, auteur);
 }
 
 void fusion(Biblio** b1, Biblio* b2){
+
+	if (((b1 == NULL) || ((*b1)->L == NULL)) || ((b2 == NULL) || (b2->L == NULL))) {return;}
 
 	Livre* tmp = b2->L;
 
@@ -118,7 +158,7 @@ void fusion(Biblio** b1, Biblio* b2){
 	liberer_biblio(b2);
 }
 
-/*Livre* recherche_doublons(Biblio* b){
+Livre* recherche_doublons(Biblio* b){
 
 	Livre* liste = b->L;
 	Livre* res_L = NULL;
@@ -138,5 +178,5 @@ void fusion(Biblio** b1, Biblio* b2){
 		}
 	}
 	return NULL;
-}*/
+}
 

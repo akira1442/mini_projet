@@ -22,7 +22,7 @@ void inserer_en_tete(Biblio* b,int num,char* titre,char* auteur);
 void affiche_livre(Livre* l);
 void afficher_biblio(Biblio* b);
 Livre* recherche_Livre_num(Biblio* b, int num);
-Livre* recherche_Livre_titre(Biblio* b, char titre);
+Livre* recherche_Livre_titre(Biblio* b, char* titre);
 Biblio* recherche_Livre_auteur(Biblio* b, char* auteur);
 void supprime_Livre(Biblio* b, int num, char* auteur, char* titre);
 void fusion(Biblio** b1, Biblio* b2);

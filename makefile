@@ -7,7 +7,7 @@ all: $(PROGRAMS)
 main: BiblioH.o biblioLC.o entreeSortieLC.o entreeSortieH.o main.o
 	gcc -o $(CFLAGS)
 
-liste: biblioLC.o entreeSortieLC.o main.o
+test_liste: biblioLC.o entreeSortieLC.o test.o
 	gcc -o $@ $(CFLAGS) $^ $(LDFLAGS)
 	
 entreeSortieLC.o: entreeSortieLC.c
@@ -24,6 +24,9 @@ BiblioH.o: BiblioH.c
 
 main.o: main.c
 	gcc $(CFLAGS) -c main.c
+
+test.o: test.c
+	gcc $(CFLAGS) -c test.c
 	
 clean:
 	rm -f *.o *~ $(PROGRAMS)
