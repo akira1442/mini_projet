@@ -165,10 +165,11 @@ Livre* recherche_doublons(Biblio* b){
 	Livre* doublon = NULL;
 
 	while (liste){
-		doublon = recherche_Livre_auteur(b, liste->auteur)->L;
+		doublon = liste->suiv;
 		while (doublon){
-			res_L = (Livre*)malloc(sizeof(Livre));
+			
 			if (strcmp(liste->titre, doublon->titre) && strcmp(liste->auteur, doublon->auteur)){
+				res_L = (Livre*)malloc(sizeof(Livre));
 				res_L->titre = strdup(doublon->titre);
 				res_L->auteur = strdup(doublon->auteur);
 				res_L->num = doublon->num;
