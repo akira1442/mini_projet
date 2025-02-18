@@ -50,6 +50,16 @@ int fonctionHachage(int cle, int m){
 	return (int)res;
 }
 
+void inserer(BiblioH* b, int num, char* titre, char* auteur) {
+    LivreH* new_livre = creer_livre(num, titre, auteur);
+    if (*(b->T) == NULL) { // si y'a rien dans la biblio on insère en tete
+        (*b->T)->clef = num;
+        (*b->T)->titre = titre;
+        (*b->T)->auteur = auteur;
+        int hash = fonctionHachage(num, b->m); 
+    } 
+}
+
 
 void main(){
 	LivreH* livre = creer_livre(1234,"SLMKF","MKSRF");
@@ -60,7 +70,7 @@ void main(){
 	printf("%d\n",b->nE);
 	printf("%d\n",b->m);
 	liberer_biblio(b);
-	int test_h = fonctionHachage(3,5);
-	printf("le hash du livre est %d\n",test_h);
+	// int test_h = fonctionHachage(3,5);
+	// printf("le hash du livre est %d\n",test_h);
 
 	}
