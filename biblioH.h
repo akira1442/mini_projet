@@ -23,3 +23,4 @@ void liberer_livre(LivreH* l);
 BiblioH* creer_biblio(int m);
 void liberer_biblio(BiblioH* b);
 int fonctionHachage(int cle, int m);
+void inserer(BiblioH* b,int num,char* titre,char* auteur);

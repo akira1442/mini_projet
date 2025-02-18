@@ -41,15 +41,15 @@ void liberer_biblio(BiblioH* b){
 	free(b->T);
 	free(b);
 }
-/*
+
+
 int fonctionHachage(int cle, int m){
-	int res = 0;
-	int a=int((sqrt(5)-1)/2)
-	res = 
-	
-	return res
+	float res = 0;
+	float a=(sqrt(5)-1)/2 ;
+	res = floor(m*(cle*a - floor(cle*a)));
+	return (int)res;
 }
-*/
+
 
 void main(){
 	LivreH* livre = creer_livre(1234,"SLMKF","MKSRF");
@@ -60,4 +60,7 @@ void main(){
 	printf("%d\n",b->nE);
 	printf("%d\n",b->m);
 	liberer_biblio(b);
+	int test_h = fonctionHachage(3,5);
+	printf("le hash du livre est %d\n",test_h);
+
 	}
