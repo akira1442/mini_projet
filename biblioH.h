@@ -16,7 +16,6 @@ typedef struct table {
 	LivreH ** T ; /*table de hachage avec resolution des collisions par chainage */
 } BiblioH ;
 
-
 int fonctionClef(char* auteur);
 LivreH* creer_livre(int num, char* titre, char* auteur);
 void liberer_livre(LivreH* l);
@@ -24,3 +23,11 @@ BiblioH* creer_biblio(int m);
 void liberer_biblio(BiblioH* b);
 int fonctionHachage(int cle, int m);
 void inserer(BiblioH* b,int num,char* titre,char* auteur);
+void afficher_livre(LivreH* livre);
+void afficher_biblio(BiblioH* b);
+LivreH* recherche_Livre_num(BiblioH* b, int num);
+LivreH* recherche_Livre_titre(BiblioH* b, char* titre);
+BiblioH* recherche_Livre_auteur(BiblioH* b, char* auteur);
+void supprime_Livre(BiblioH* b, int num, char* titre, char* auteur);
+BiblioH* fusion(BiblioH* b1, BiblioH* b2);
+BiblioH* recherche_ouvrage(BiblioH* b);

@@ -12,8 +12,8 @@ int fonctionClef(char* auteur){
 
 LivreH* creer_livre(int num, char* titre, char* auteur){
 	LivreH* new=(LivreH*)malloc(sizeof(LivreH));
-	
-	new -> clef = num;
+
+	new -> clef = fonctionClef(auteur);
 	new -> titre = strdup(titre);
 	new -> auteur = strdup(auteur);
 	new -> suivant = NULL;
@@ -52,7 +52,6 @@ void liberer_biblio(BiblioH* b){
 	free(b);
 }
 
-
 int fonctionHachage(int cle, int m){
 	float res = 0;
 	float a=(sqrt(5)-1)/2 ;
@@ -60,6 +59,39 @@ int fonctionHachage(int cle, int m){
 	return (int)res;
 }
 
+void afficher_livreH(LivreH* l){
+	printf("num : %d\n",l->clef);
+	printf("titre : %s\n",l->titre);
+	printf("auteur : %s\n",l->auteur);
+}
+
+void afficher_biblio(BiblioH* b){
+	LivreH* l;
+	for (int i = 0; i < b->m; i++){
+		l = b->T[i];
+		while(l != NULL){
+			afficher_livreH(l);
+			l = l->suivant;
+		}
+	}
+}
+
+LivreH* recherche_Livre_num(BiblioH* b, int num){
+
+	LivreH* tmp = NULL;
+
+	for (int i = 0; i < b->m; i++){
+		tmp = b->T[i];
+		while (tmp != NULL){
+			if (tmp->clef == num){
+				return tmp;
+			}
+			tmp = tmp->suivant;
+		}
+	}
+
+
+}
 
 void main(){
 	LivreH* livre = creer_livre(1234,"SLMKF","MKSRF");
