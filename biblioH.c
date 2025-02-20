@@ -38,6 +38,16 @@ BiblioH* creer_biblio(int m){
 }
 
 void liberer_biblio(BiblioH* b){
+
+	for (int i = 0; i < b->m; i++){
+		LivreH* temp = b->T[i];
+		while (temp){
+			LivreH* temp2 = temp;
+			temp = temp->suivant;
+			liberer_livre(temp2);
+		}
+	}
+
 	free(b->T);
 	free(b);
 }
