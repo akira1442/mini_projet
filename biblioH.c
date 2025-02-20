@@ -102,7 +102,7 @@ void main(){
 	printf("%d\n",b->nE);
 	printf("%d\n",b->m);
 	liberer_biblio(b);
-	int test_h = fonctionHachage(3,5);
-	printf("le hash du livre est %d\n",test_h);
+	// int test_h = fonctionHachage(3,5);
+	// printf("le hash du livre est %d\n",test_h);
 
 	}
