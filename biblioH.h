@@ -4,6 +4,7 @@
 #include <math.h>
 
 typedef struct livreh {
+	int num;
 	int clef;
 	char* titre;
 	char* auteur;

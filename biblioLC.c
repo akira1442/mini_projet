@@ -166,7 +166,7 @@ Livre* recherche_doublons(Biblio* b){
 
 	while (liste){
 		doublon = liste->suiv;
-		while (doublon){
+		while (doublon && res_L){
 			
 			if (strcmp(liste->titre, doublon->titre) && strcmp(liste->auteur, doublon->auteur)){
 				res_L = (Livre*)malloc(sizeof(Livre));
