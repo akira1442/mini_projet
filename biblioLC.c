@@ -15,13 +15,17 @@ Livre* creer_livre(int num,char* titre,char* auteur){
 
 void liberer_livre(Livre* l){
 
-	free(l->titre);
-	free(l->auteur);
-	free(l);
+	if (l != NULL){
+		free(l->titre);
+		free(l->auteur);
+		free(l);
+	}
 }
 
 Biblio* creer_biblio(){
+
 	Biblio* b = (Biblio*)malloc(sizeof(Biblio));
+
 	b->L = NULL;
 	return b;
 }
@@ -29,12 +33,13 @@ Biblio* creer_biblio(){
 void liberer_biblio(Biblio* b){
 
 	Livre* tmp = b->L;
-
-	while(tmp){
-		b->L = b->L->suiv;
-		liberer_livre(tmp);
-		tmp = b->L;
+	Livre* supp = tmp;
+	while (tmp != NULL){
+		supp = tmp;
+		tmp = tmp->suiv;
+		liberer_livre(supp);
 	}
+	
 	free(b);
 }
 
@@ -83,13 +88,14 @@ Livre* recherche_Livre_num(Biblio* b, int num){
 	return temp;
 }
 
-Livre* recherche_Livre_titre(Biblio* b, char* titre){
+Livre* recherche_Livre_titre(Livre* l, char* titre){
 
-	if ((b == NULL) || (b->L == NULL)) {return NULL;}
+	if (l == NULL) {return NULL;}
 
-	Livre* temp = b->L;
-	while (temp){
-		if(strcmp(temp->titre, titre)){
+	Livre* temp = l;
+
+	while (temp != NULL){
+		if(strcmp(temp->titre, titre)==0){
 			return temp;
 		}
 		temp=temp->suiv;
@@ -104,7 +110,7 @@ Biblio* recherche_Livre_auteur(Biblio* b, char* auteur){
 	Livre* temp = b->L;
 	Biblio* biblio_aut=creer_biblio();
 	while(temp){
-		if (strcmp(temp->auteur, auteur)){
+		if (strcmp(temp->auteur, auteur)==0){
 			inserer_en_tete(biblio_aut, temp->num, temp->titre, temp->auteur);
 		}
 		temp=temp->suiv;
@@ -125,8 +131,8 @@ void supprime_Livre(Biblio* b, int num, char* auteur, char* titre){
 		if ((curr->num == num) &&  (strcmp(auteur, curr->auteur) == 0) && (strcmp(titre, curr->titre) == 0)){
 			// Cas ou la suppression se fait en tête
 			if (prec == NULL){
-				b->L = curr->suiv;
 				curr = b->L;
+				b->L = b->L->suiv;
 			}
 			// Cas ou la suppression se fait au milieu ou en queue
 			else{
@@ -134,17 +140,20 @@ void supprime_Livre(Biblio* b, int num, char* auteur, char* titre){
 			}
 			liberer_livre(curr);
 			printf("%d, %s, %s a ete suppprime\n", num, auteur, titre);
-			break;
+			return;
 		}
+		prec = curr;
 		curr = curr->suiv;
-		prec = prec->suiv;
 	}
 	printf("%d, %s, %s n'est pas dans la bibliotheque\n", num, titre, auteur);
 }
 
 void fusion(Biblio** b1, Biblio* b2){
 
-	if (((b1 == NULL) || ((*b1)->L == NULL)) || ((b2 == NULL) || (b2->L == NULL))) {return;}
+	if ((b2 == NULL) || (b2->L == NULL)) {
+		free(b2);
+		return;
+	}
 
 	Livre* tmp = b2->L;
 
@@ -158,26 +167,66 @@ void fusion(Biblio** b1, Biblio* b2){
 	liberer_biblio(b2);
 }
 
-Livre* recherche_doublons(Biblio* b){
+Livre* recherche_ouvrage(Biblio* b){
 
-	Livre* liste = b->L;
-	Livre* res_L = NULL;
-	Livre* doublon = NULL;
+	if (b == NULL || b->L == NULL){return NULL;}
 
-	while (liste){
-		doublon = liste->suiv;
-		while (doublon && res_L){
-			
-			if (strcmp(liste->titre, doublon->titre) && strcmp(liste->auteur, doublon->auteur)){
-				res_L = (Livre*)malloc(sizeof(Livre));
-				res_L->titre = strdup(doublon->titre);
-				res_L->auteur = strdup(doublon->auteur);
-				res_L->num = doublon->num;
-				res_L->suiv = NULL;
-				res_L = res_L->suiv;
-			}	
+	Livre* curr = b->L;
+	Livre* head = NULL;
+	Livre* tmp = NULL;
+
+	while(curr){
+		Livre* rech = recherche_Livre_titre(curr->suiv, curr->titre);
+		while(rech != NULL){
+			if (head == NULL){
+				head = creer_livre(rech->num, rech->titre, rech->auteur); 
+			}else{
+				tmp = creer_livre(rech->num, rech->titre, rech->auteur);
+				tmp->suiv = head;
+				head = tmp;
+			}
+			rech = recherche_Livre_titre(rech->suiv, curr->titre);
 		}
+		rech = NULL;
+		curr = curr->suiv;
 	}
-	return NULL;
+	return head;
 }
+
+/*Livre* recherche_ouvrage(Biblio* b) {
+    if (b==NULL || b->L==NULL) {
+        return NULL;
+    }
+    Livre* tete = NULL;
+    Livre* res = NULL;
+    Livre* tmp=b->L;
+    int nbEx=1;
+
+    while (tmp->suiv != NULL) {
+        Livre* suiv = tmp;
+        while (suiv != NULL) {
+            if ((tmp->num != suiv->num) && (strcmp(suiv->titre,tmp->titre) == 0) && (strcmp(suiv->auteur,tmp->auteur) == 0)) {
+                if (nbEx == 1) {
+                    if (tete==NULL) {
+                        tete=creer_livre(tmp->num,tmp->titre,tmp->auteur);
+                        res=tete;
+                    }
+                    else {
+                        res->suiv=creer_livre(tmp->num,tmp->titre,tmp->auteur);
+                        res=res->suiv;
+                        nbEx++;
+                    }
+                }
+                res->suiv=creer_livre(suiv->num,suiv->titre,suiv->auteur);
+                res=res->suiv;
+            }
+            suiv=suiv->suiv;
+        }
+        if (nbEx > 1) {
+            nbEx=1;
+        }
+        tmp=tmp->suiv;
+    }
+    return tete;
+}*/
 

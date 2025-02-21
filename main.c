@@ -8,6 +8,7 @@ void menu(){
     printf("1-Affichage de la bibliothèque\n");
     printf("2-Ajouter un ouvrage\n");
     printf("3-Supprimer un ouvrage\n");
+    printf("4-Rechercher un ouvrage\n");
     printf("===================================\n");
 }
 
@@ -57,6 +58,18 @@ int main(int argc, char** argv){
                 printf("Numero, TITRE, Auteur:\n");
                 scanf("%d %s %s", &num, titre, auteur);
                 supprime_Livre(B, num, auteur, titre);
+                break;
+            case 4:
+                printf("Numero, TITRE, Auteur:\n");
+                scanf("%d %s %s", &num, titre, auteur);
+                if (recherche_Livre_num(B, num) != NULL){
+                    printf("Livre trouvé\n");
+                }else if (recherche_Livre_titre(B->L, titre) != NULL){
+                    printf("Livre trouvé\n");
+                }else{
+                    printf("Livre non trouvé\n");
+                }
+                break;
             default:
                 
         }

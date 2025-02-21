@@ -31,4 +31,4 @@ LivreH* recherche_Livre_titre(BiblioH* b, char* titre);
 BiblioH* recherche_Livre_auteur(BiblioH* b, char* auteur);
 void supprime_Livre(BiblioH* b, int num, char* titre, char* auteur);
 BiblioH* fusion(BiblioH* b1, BiblioH* b2);
-BiblioH* recherche_ouvrage(BiblioH* b);
+LivreH* recherche_ouvrage(BiblioH* b);
