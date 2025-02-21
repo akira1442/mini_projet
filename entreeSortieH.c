@@ -1,5 +1,5 @@
 #include "entreeSortieH.h"
-#include "BiblioH.h"
+#include "biblioH.h"
 
 BiblioH* charger_n_entreesH(char* nomfic, int n) {
     
@@ -14,7 +14,7 @@ BiblioH* charger_n_entreesH(char* nomfic, int n) {
         exit(1);
     }
 
-    BiblioH* b = creer_biblioH(n);
+    BiblioH* b = creer_biblio(n);
 
     int i = 0, num;
     char auteur[256];

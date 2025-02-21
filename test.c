@@ -2,7 +2,7 @@
 
 int main(){
 
-    Biblio* B;
+    BiblioH* B;
     B = charger_n_entrees("GdeBiblio.txt", 10);
 
     inserer_en_tete(B, 42, "LA_VIE", "Richard_ENG");

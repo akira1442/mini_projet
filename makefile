@@ -5,7 +5,7 @@ PROGRAMS = main
 all: $(PROGRAMS)
 
 main: biblioH.o biblioLC.o entreeSortieLC.o entreeSortieH.o main.o
-	gcc -o $(CFLAGS)
+	gcc -o $@ $(CFLAGS) $^ $(LDFLAGS)
 
 test_liste: biblioLC.o entreeSortieLC.o test.o
 	gcc -o $@ $(CFLAGS) $^ $(LDFLAGS)
