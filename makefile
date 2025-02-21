@@ -4,7 +4,7 @@ PROGRAMS = main
 
 all: $(PROGRAMS)
 
-main: BiblioH.o biblioLC.o entreeSortieLC.o entreeSortieH.o main.o
+main: biblioH.o biblioLC.o entreeSortieLC.o entreeSortieH.o main.o
 	gcc -o $(CFLAGS)
 
 test_liste: biblioLC.o entreeSortieLC.o test.o
@@ -19,8 +19,8 @@ entreeSortieH.o: entreeSortieH.c
 biblioLC.o: biblioLC.c 
 	gcc $(CFLAGS) -c biblioLC.c
 
-BiblioH.o: BiblioH.c
-	gcc $(CFLAGS) -c BiblioH.c
+biblioH.o: biblioH.c
+	gcc $(CFLAGS) -c biblioH.c
 
 main.o: main.c
 	gcc $(CFLAGS) -c main.c

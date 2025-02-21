@@ -2,5 +2,5 @@
 #include <stdlib.h>
 #include "biblioH.h"
 
-charger_n_entreesH(char* nomfic, int n);
-enregistrer_biblioH(BiblioH* b, char* nomfic);
+BiblioH* charger_n_entreesH(char* nomfic, int n);
+void enregistrer_biblioH(BiblioH* b, char* nomfic);
